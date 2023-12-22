@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DanhMucSp>
+
+<div class="panel-body">
+    <ul class="nav prod-cat">
+
+        @foreach(var danhmuc in Model)
+        {
+            <li>
+                <a asp-controller="SanPham" asp-action="SanPhamTheoDanhMuc" asp-route-maDM="@danhmuc.MaDm" asp-route-page="1">
+                <i class="fa fa-angle-right"></i> 
+                    <img src="@Url.Content("../img/category/" + @danhmuc.AnhDm)" alt="" style="width:20px;">
+                @danhmuc.TenDm
+            </a>
+        </li>
+        }
+
+    </ul>
+</div>

@@ -1,0 +1,97 @@
+@model WebCafe.Models.SanPham
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .col-sm-10,
+    .col-sm-2 {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .col-sm-2 {
+        color: #000;
+    }
+</style>
+<div style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+    <h2>Xóa Sản Phẩm</h2>
+
+    <h5>Bạn muốn xóa sản phẩm này?</h5>
+    <div>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2 anh-sp">
+                Ảnh Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@Url.Content("~/img/product/" + @Model.AnhSp)" style="width:200px;">
+            </dd>
+            <dt class="col-sm-2">
+                Tên Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TenSp)
+            </dd>
+            <dt class="col-sm-2">
+                Video Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VideoSp)
+            </dd>
+            <dt class="col-sm-2">
+                Giá Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.GiaSp)
+            </dd>
+            <dt class="col-sm-2">
+                Trạng Thái Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TrangThai)
+            </dd>
+            <dt class="col-sm-2">
+                Số Lượng:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SoLuong)
+            </dd>
+            <dt class="col-sm-2">
+                Sản Phẩm Bán Chạy:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BestSeller)
+            </dd>
+            <dt class="col-sm-2">
+                Ngày Tạo:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+            <dt class="col-sm-2">
+                Ngày Sửa:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NgaySua)
+            </dd>
+            <dt class="col-sm-2">
+                Mô Tả Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MotaSp)
+            </dd>
+        </dl>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="MaSp" />
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <div id="thongBao" data-tbao="@ViewBag.ThongBao"></div>
+            <script src="~/js/Alert_Them_Sua_Xoa_ThatBai.js"></script>
+        </form>
+    </div>
+</div>

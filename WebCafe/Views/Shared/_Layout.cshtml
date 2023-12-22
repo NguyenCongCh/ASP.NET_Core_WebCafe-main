@@ -1,0 +1,288 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WebCafe.Extension
+@using WebCafe.ModelViews
+@{
+    List<WebCafe.ModelViews.CartItem> lisSP = new List<WebCafe.ModelViews.CartItem>();
+    var gio = Context.Session.Get<List<CartItem>>("GioHang");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/img/logo/logo.png">
+    <title>Web Bán Cafe</title>
+    <link rel="stylesheet" href="~/lib/bootstrap-5.1.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/font/themify-icons-font/themify-icons/themify-icons.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/js/jquery/jquery-2.2.4.min.js" />
+    <link rel="stylesheet" href="~/css/css_content.css">
+    <style>
+        .dangnhap-button a:hover {
+            color: rgb(198, 209, 37);
+        }
+
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+
+        .label-warning[href],
+        .badge-warning[href] {
+            background-color: #c67605;
+        }
+
+        #lblCartCount {
+            font-size: 12px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0 5px;
+            vertical-align: top;
+            margin-left: -10px;
+        }
+
+        .giohang-header .cart {
+            width: 40px;
+            position: absolute;
+            top: 25%;
+            right: 15%;
+        }
+
+        .giohang-header i {
+            color: rgb(7, 44, 112);
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <!-- Bắt đầu thanh menu navigation -->
+        <div class="header" style="z-index: 10 !important;">
+            <ul class="header-nav mb-0">
+                <a asp-controller="Home" asp-action="Index">
+                    <img class="logo-header" src="~/img/logo/logo.png" alt="">
+                </a>
+                <li>
+                    <a href="#">GIỚI THIỆU</a>
+                    <ul class="header-subnav">
+                        <li><a href="#">LỊCH SỬ</a></li>
+                        <li><a href="#">CHÍNH SÁCH & QUY ĐỊNH</a></li>
+                    </ul>
+                </li>
+                <li><a asp-action="Index" asp-controller="SanPham">SẢN PHẨM</a></li>
+                <li>
+                    <a asp-action="Index" asp-controller="TinTuc">TIN TỨC</a>
+                    <ul class="header-subnav">
+                        <li><a href="#">KHUYẾN MÃI</a></li>
+                        <li><a href="#">THÔNG TIN</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">CỬA HÀNG</a></li>
+                <li>
+                    <a href="#">HỖ TRỢ</a>
+                    <ul class="header-subnav">
+                        <li><a href="#">DỊCH VỤ</a></li>
+                        <li><a asp-action="Index" asp-controller="GioHang">LIÊN HỆ</a></li>
+                        <li><a href="#">BÁO CÁO</a></li>
+                    </ul>
+                </li>
+            </ul>
+            @* <a asp-action="Index" asp-controller="GioHang"><img class="cart" src="~/img/cart.png" alt=""></a>*@
+            @if (Context.Session.GetString("MaKh") != null)
+            {
+                <div class="giohang-header" id="CartCount">
+                    <a asp-action="Index" asp-controller="GioHang">
+                        <img class="cart" src="~/img/cart.png" alt="">
+                        <span class="count"></span>
+                    </a>
+                    @* @if(gio != null)
+                {
+                <a asp-action="Index" asp-controller="GioHang" >
+                <i class="fa" style="font-size:24px">&#xf07a;</i>
+                <span class='badge badge-warning' id='lblCartCount'> @gio.Count() </span>
+                </a>
+                }
+                else
+                {
+                <a asp-action="Index" asp-controller="GioHang">
+                <i class="fa" style="font-size:24px">&#xf07a;</i>
+                <span class='badge badge-warning' id='lblCartCount'>0</span>
+                </a>
+                }*@
+                </div>
+
+                <div class="dangnhap-button">
+                    <a asp-action="UserDashboard" asp-controller="Home" style="text-decoration: none;">
+                        <i class="ti-user"></i> @Context.Session.GetString("TenKh").ToString()
+                    </a>
+                </div>
+
+            }
+            else
+            {
+                <div class="dangnhap-button">
+                    <a asp-action="Login" asp-controller="Home" style="text-decoration:none;"><i class="ti-user"></i> Login</a>
+                </div>
+            }
+
+        </div>
+
+        <!-- Thanh Slider và Button Tìm kiếm -->
+        <div class="slider" style=" background: url('../img/slide/bg_banner.jpg') center; background-repeat: repeat;  ">
+            <div id="header" class="search-btn">
+                <input type="text" name="" placeholder="Tìm Kiếm" required id="" class="form-input-search">
+                <a href=""><i id="search-btn" class="search-icon ti-search"></i></a>
+            </div>
+        </div>
+
+        @RenderBody()
+
+        <!-- Thẻ footer trên -->
+        <div class="container-footer-top">
+            <div class="logo-footer">
+                <a asp-controller="Home" asp-action="Index"><img class="imglogo-footer" src="../img/logo/logo.png" alt=""></a>
+            </div>
+            <div class="row footer-top">
+                <div class="col-md-4">
+                    <ul class="footer-nav1">
+                        <li><a href="">Liên hệ</a></li>
+                        <li><a href="">Chăm sóc khách hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="footer-nav2">
+                        <li><a href="">Dịch vụ giao hàng tận nhà</a></li>
+                        <li><a href="">Chính sách & Quy định chung</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <div class="pay-nav">
+                        <p>Thanh toán</p>
+                        <div class="row pay-imgnav">
+                            <div class="col-sm-6"><img src="~/img/img-appstore.svg" alt=""></div>
+                            <div class="col-sm-6"><img src="~/img/img-ch.svg" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thẻ footer dưới -->
+        <div class="footer-end">
+            <div class="logo-info-brand">
+                <a href=""><img class="yt-logo" width="10%" src="~/img/logo/yt-logo.png" alt=""></a>
+                <a href=""><img class="fb-logo" width="10%" src="~/img/logo/fb-logo.png" alt=""></a>
+                <a href=""><img class="ins-logo" width="10%" src="~/img/logo/ins-logo.png" alt=""></a>
+                <a href=""><img class="swt-logo" width="10%" src="~/img/logo/swt-logo.png" alt=""></a>
+            </div>
+            <div class="footer-text-info">
+                <p>
+                    Cơ quan chủ quản: Chủ quán cafe đẹp trai <br>
+                    Trụ sở: TP. Hà Nội – Điện thoại: 012345xxxx <br>
+                    MST: 0123456789 - Số ĐKKD: 1234567890 cấp ngày 20/05/2023 bởi Sở Kế hoạch và Đầu tư thành phố Hà Nội.
+                </p>
+                <a href="#search-btn" class="go-header">
+                    <i class='bx bxs-chevrons-up'></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="~/js/slides.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function AddToCartList(Id) {
+            $.ajax({
+                url: '/giohang/add-cart',
+                type: 'POST',
+                data: { maSP: Id, soLuong: 1 },
+                success: function () {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thêm thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Đã có lỗi xảy ra',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        }
+
+        function loadHeader() {
+            location.reload();
+        }
+    </script>
+    <script type="text/javascript">
+        function AddToCart(Id) {
+            $.ajax({
+                url: '/giohang/add-cart',
+                type: 'POST',
+                data: { maSP: Id, soLuong: $('#txtsoLuong').val() },
+                success: function (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thêm thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Đã có lỗi xảy ra',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".wish-icon i").click(function () {
+                $(this).toggleClass("fa-heart fa-heart-o");
+            });
+        });
+    </script>
+    <script>
+        function updateCartCount() {
+            $.ajax({
+                url: '/cart/count',
+                success: function (count) {
+                    $('#CartCount .count').text(count);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            // Update cart count on page load
+            updateCartCount();
+
+            // Update cart count every 10 seconds
+            setInterval(updateCartCount, 1000);
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

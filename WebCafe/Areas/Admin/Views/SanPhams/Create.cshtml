@@ -1,0 +1,150 @@
+@model WebCafe.Models.SanPham
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+</head>
+
+<div class="card-body" style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+        <h5 class="text-uppercase">Thêm Mới Sản Phẩm</h5>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="MaDm" class="control-label">Chọn Danh Mục</label>
+                <select asp-for="MaDm" class="form-control" asp-items="ViewBag.MaDm"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TenSp" class="control-label">Tên Sản Phẩm</label>
+                    <input asp-for="TenSp" class="form-control" />
+                    <span asp-validation-for="TenSp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="GiaSp" class="control-label">Giá Sản Phẩm</label>
+                    <input asp-for="GiaSp" class="form-control" />
+                    <span asp-validation-for="GiaSp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="AnhSp" class="control-label">Link Ảnh Sản Phẩm</label>
+                    <input asp-for="AnhSp" class="form-control col-md-9" id="file-name" />
+                    <input type="button" id="choose-file" value="Choose File" class="form-control btn btn-primary col-md-3" />
+                    <span asp-validation-for="AnhSp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="VideoSp" class="control-label">Link Video Sản Phẩm</label>
+                    <input asp-for="VideoSp" class="form-control" id="file-video" />
+                    <input type="button" id="choose-video" value="Choose video" class="form-control btn btn-primary col-md-3" />
+                    <span asp-validation-for="VideoSp" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="TrangThai" /> Còn Hàng
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="BestSeller" /> Sản Phẩm Bán Chạy
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="SoLuong" class="control-label">Số Lượng</label>
+                    <input asp-for="SoLuong" class="form-control" min="1"/>
+                    <span asp-validation-for="SoLuong" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CreateDate" class="control-label">Ngày Tạo</label>
+                    <input asp-for="CreateDate" class="form-control" />
+                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                </div>
+            </div>
+            <!--
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="NgaySua" class="control-label">Ngày Sửa</label>
+                    <input asp-for="NgaySua" class="form-control" />
+                    <span asp-validation-for="NgaySua" class="text-danger"></span>
+                </div>
+            </div>
+            -->
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="MotaSp" class="control-label">Mô Tả Sản Phẩm</label>
+                <textarea id="motasp" asp-for="MotaSp" class="form-control"></textarea>
+                <span asp-validation-for="MotaSp" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Thêm" class="btn btn-primary" />
+            <div id="thongBao" data-tbao="@ViewBag.ThongBao"></div>
+            <script src="~/js/Alert_Them_Sua_Xoa_ThatBai.js"></script>
+        </div>
+    </form>
+</div>
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("motasp") });
+</script>
+
+<script>
+    // Chọn ảnh
+    var chooseFileButton = document.getElementById('choose-file');
+    var fileNameTextbox = document.getElementById('file-name');
+
+    chooseFileButton.addEventListener('click', function () {
+        var fileChooser = document.createElement('input');
+        fileChooser.setAttribute('type', 'file');
+        fileChooser.setAttribute('accept', '.jpg,.png');
+
+        fileChooser.addEventListener('change', function () {
+            fileNameTextbox.value = fileChooser.files[0].name;
+        });
+
+        fileChooser.click('OK');
+    });
+</script>
+<script>
+    // Chọn video
+    var chooseFileButton = document.getElementById('choose-video');
+    var fileNameTextbox1 = document.getElementById('file-video');
+
+    chooseFileButton.addEventListener('click', function () {
+        var fileChooser = document.createElement('input');
+        fileChooser.setAttribute('type', 'file');
+        fileChooser.setAttribute('accept', '.mp4');
+
+        fileChooser.addEventListener('change', function () {
+            fileNameTextbox1.value = fileChooser.files[0].name;
+        });
+
+        fileChooser.click('OK');
+    });
+</script>

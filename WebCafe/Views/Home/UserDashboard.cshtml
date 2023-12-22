@@ -1,0 +1,246 @@
+﻿@using static WebCafe.Models.KhachHang
+@model WebCafe.Models.KhachHang
+@{
+    ViewData["Title"] = "UserDashboard";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <form asp-action="UserDashboard">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="MaKh" />
+        <input type="hidden" asp-for="Password" />
+        <input type="hidden" asp-for="AccountId" />
+        <div class="container p-0">
+            <h1 class="h3 mb-3">Tài Khoản</h1>
+            <div class="row">
+                <div class="col-md-5 col-xl-4">
+
+                    <div class="card-profile">
+                        <div class="card-profile-header">
+                            <h5 class="card-title mb-0">Chỉnh Sửa Thông Tin</h5>
+                        </div>
+
+                        <div class="list-group list-group-flush" role="tablist">
+                            <a class="list-group-item list-group-item-action active" asp-action="UserDashboard" asp-controller="Home" role="tab">
+                                <i class='bx bx-user'></i> Tài Khoản
+                            </a>
+                            <a class="list-group-item list-group-item-action" asp-action="ChangePassword" asp-controller="Home" role="tab">
+                                <i class='bx bx-lock-alt'></i> Mật Khẩu
+                            </a>
+                            <a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="DonHangs" role="tab">
+                                <i class='bx bx-shopping-bag'></i> Đơn Mua
+                            </a>
+                            <a class="list-group-item list-group-item-action" href="#" role="tab">
+                                <i class='bx bx-bell'></i> Thông báo
+                            </a>
+                            <a class="list-group-item list-group-item-action" asp-action="Logout" asp-controller="Home" role="tab">
+                                <i class='bx bx-log-out-circle'></i> Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7 col-xl-8">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="account" role="tabpanel">
+
+                            <div class="card-profile">
+                                <div class="card-profile-header">
+                                    <div class="card-actions float-right">
+                                        <div class="dropdown show">
+                                            <a href="#" data-toggle="dropdown" data-display="static">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title mb-0">Thông Tin Công Khai</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label asp-for="TenKh">Tên Của Bạn</label>
+                                                <input asp-for="TenKh" type="text" class="form-control" id="inputUsername" placeholder="Username">
+                                                <span asp-validation-for="TenKh" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputUsername">Tiểu Sử</label>
+                                                <textarea rows="2" class="form-control" id="inputBio" placeholder="Về bản thân của bạn"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                @{
+                                                    if (Model.AvatarKh != null)
+                                                    {
+                                                        <img id="imgCustomer" src="@Url.Content("../img/customer/"+Model.AvatarKh)" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img id="imgCustomer" src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle img-responsive mt-2" width="128" height="128"> 
+                                                    }
+                                                }                                                
+                                                <div class="mt-2">
+                                                    <label asp-for="AvatarKh" class="control-label">Link Ảnh Đại Diện</label>
+                                                    <input type="hidden" id="file-name" asp-for="AvatarKh" class="form-control col-md-9"/>
+                                                    <input type="button" id="choose-file" value="Choose File" class="form-control btn btn-primary col-md-6" />
+                                                    <span asp-validation-for="AvatarKh" class="text-danger"></span>
+                                                </div>
+                                                <small>Để có hình ảnh đẹp nhất, hãy sử dụng hình ảnh có kích thước tối thiểu 128px x 128px ở định dạng .jpg hoặc.png</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-profile">
+                                <div class="card-profile-header">
+                                    <div class="card-actions float-right">
+                                        <div class="dropdown show">
+                                            <a href="#" data-toggle="dropdown" data-display="static">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                                </svg>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title mb-0">Thông Tin Riêng Tư</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="Phone">Số điện thoại</label>
+                                            <input asp-for="Phone" type="text" class="form-control" id="inputFirstName" placeholder="Phone">
+                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(m => m.GioiTinh,
+                                                new SelectList(Enum.GetValues(typeof(Gender))),
+                                                "Chọn Giới Tính:")
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="Ngaysinh" class="control-label">Ngày Sinh</label>
+                                            <input asp-for="Ngaysinh" type="date" class="form-control" />
+                                            <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Email">Email</label>
+                                        <input asp-for="Email" type="email" class="form-control" id="inputEmail4" readonly placeholder="Email">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Diachi">Địa Chỉ</label>
+                                        <input asp-for="Diachi" type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                        <span asp-validation-for="Diachi" class="text-danger"></span>
+                                    </div>
+                                    <button type="submit" value="Save" class="btn btn-primary">Lưu Thay Đổi</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+            background: #F0F8FF;
+        }
+
+        .card-profile {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+        }
+
+        .card-profile {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #e5e9f2;
+            border-radius: .2rem;
+        }
+
+        .card-header:first-child {
+            border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;
+        }
+
+        .card-profile-header {
+            border-bottom-width: 1px;
+        }
+
+        .card-profile-header {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            color: inherit;
+            background-color: #fff;
+            border-bottom: 1px solid #e5e9f2;
+        }
+
+        #GioiTinh {
+            border: 1px solid #d2d6da;
+            border-radius: 14px;
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 6px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var password = document.getElementById("inputPasswordNew")
+            , confirm_password = document.getElementById("inputPasswordNew2");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Mật khẩu không trùng khớp !");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+    <script>
+        var chooseFileButton = document.getElementById('choose-file');
+        var img = document.getElementById('imgCustomer');
+        var fileNameTextbox = document.getElementById('file-name');
+
+        chooseFileButton.addEventListener('click', function () {
+            var fileChooser = document.createElement('input');
+            fileChooser.setAttribute('type', 'file');
+            fileChooser.setAttribute('accept', '.jpg,.png');
+
+            fileChooser.addEventListener('change', function () {
+                img.setAttribute('src', '../img/customer/' + fileChooser.files[0].name);
+                fileNameTextbox.value = fileChooser.files[0].name;
+            });
+
+            fileChooser.click('OK');
+        });
+    </script>
+</body>

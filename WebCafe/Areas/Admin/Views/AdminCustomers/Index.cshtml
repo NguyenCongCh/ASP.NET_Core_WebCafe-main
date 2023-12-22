@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebCafe.Models.KhachHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+</head>
+
+<div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h4>Danh Sách Khách Hàng</h4>
+            </div>
+       
+            <div class="card-body px-0 pt-0 pb-2" >
+              <div class="table-responsive p-0">
+                <table id="example" class="table align-items-center justify-content-center mb-0 table-striped" style="font-size:20px;">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Khách Hàng</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Ngày Sinh</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Giới Tính</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Số Điện Thoại</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Ngày Tạo</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                      @foreach (var item in Model) {
+                      <tr>
+                      <td>
+                        <div class="d-flex px-2">
+                          <div>
+                            @{
+                                if (item.AvatarKh != null)
+                                {
+                                    <img src="@Url.Content("~/img/customer/" + item.AvatarKh)" style="width:50px;">
+                                }
+                                else
+                                {
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="max-width:50px;">
+                                }
+                            }
+                          </div>
+                          <div class="my-auto">
+                            <h6 class="mb-0 text-sm font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.TenKh)</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                          <span class="font-weight-bold" style="font-size:12px;">@item.Ngaysinh.ToString()</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@item.GioiTinh</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@item.Email</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@item.Phone</span>
+                      </td>
+                      <td>
+                          <span class="font-weight-bold" style="font-size:12px;">@item.CreateDate.ToString()</span>
+                      </td>
+                      <td class="align-middle">
+                 
+                      <a asp-action="Details" asp-route-id="@item.MaKh" class="btn btn-primary" style="font-size:12px;">Xem</a> 
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/datatables-bt5.js"></script>

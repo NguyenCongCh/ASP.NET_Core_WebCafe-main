@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+@model IEnumerable<WebCafe.Models.SanPham>
+@{
+    ViewData["Title"] = "Home Page";
+    var spBanChay = Model.Where(x => x.BestSeller == true);
+}
+<link href='~/css/row_product.css' rel='stylesheet'>
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+<style>
+    .buy:hover {
+        cursor: pointer;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+</style>
+
+<div class="content">
+    
+    @* Navigationbar danh mục sản phẩm *@
+    @await Component.InvokeAsync("DanhMucSpNavigation")
+
+
+    <div class="container mb-">
+        <div class="title-product"><h2>Sản phẩm nổi bật</h2></div>
+        <div class="row">
+            @foreach (var item in spBanChay)
+            {
+                <div class="col-md-3">
+                    <div class="card" style="width: 220px;">
+                        <div class="image-container">
+                            <div class="first">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="discount">-25%</span>
+                                    <span class="wishlist"><i class="fa fa-heart-o"></i></span>
+                                </div>
+                            </div>
+                            <img style="width:250px; height:170px;  object-fit:cover;" src="@Url.Content("../img/product/" + item.AnhSp)" class="img-fluid rounded thumbnail-image">
+                        </div>
+                        <div class="product-detail-container p-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="dress-name">@item.TenSp</h5>
+                                <div class="d-flex flex-column mb-2">
+                                    <small class="old-price text-right" style="font-size:12px; color:red;">@item.GiaSp.ToString("#,##0") VNĐ</small>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-1">
+                                <div>
+                                    <i class="fa fa-star-o rating-star"></i>
+                                    <span class="rating-number">4.8</span>
+                                </div>
+                                @if (Context.Session.GetString("MaKh") != null)
+                                {
+                                    <span class="buy" onclick="AddToCartList(@item.MaSp)">Thêm Vào Giỏ +</span>
+                                }
+                                else
+                                {
+                                    <span class="buy"><a asp-action="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">Thêm Vào Giỏ +</a></span>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+<div class="slide">
+    <div class="dieu-huong">
+        <i class='bx bxs-chevron-left' onclick="prevSlide();"></i>
+        <i class='bx bxs-chevron-right' onclick="nextSlide();"></i>
+    </div>
+    <div class="chuyen-slide">
+        <img style="max-width:900px; height:563px" src="~/img/slide/slide1.jpg" alt="">
+        <img style="max-width:900px; height:563px" src="~/img/slide/slide2.jpg" alt="">
+        <img style="max-width:900px; height:563px" src="~/img/slide/slide4.jpg" alt="">
+        <img style="max-width:900px; height:563px; stylee" src="~/img/slide/slide5.jpg" alt="">
+    </div>
+</div>
+<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script type='text/javascript'>
+    var myLink = document.querySelector('a[href="#"]');
+    myLink.addEventListener('click', function (e) {
+        e.preventDefault();
+    });
+</script>
+
+
+
+

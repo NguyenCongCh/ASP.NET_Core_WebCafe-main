@@ -1,0 +1,236 @@
+﻿@using Microsoft.AspNetCore.Http
+@model List<WebCafe.ModelViews.CartItem>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+    
+    CuaHangBanCafeContext db = new CuaHangBanCafeContext();
+    var lstSanPham = db.SanPhams.ToList();
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="~/css/cart.css" />
+<div class="container padding-bottom-3x mb-1">
+    <!-- Shopping Cart-->
+    @if (Model != null && Model.Count() > 0)
+    {
+        <div class="table-responsive shopping-cart">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th class="text-center">Số Lượng</th>
+                        <th class="text-center">Đơn Giá</th>
+                        <th class="text-center">Giảm Giá (Nếu có)</th>
+                        <th class="text-center"><a class="btn btn-sm btn-outline-danger" asp-action="CleanCart" asp-controller="GioHang">Xóa tất cả</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="product-item">
+                                    <a class="product-thumb" asp-action="Details" asp-route-id="@item.sanPham.MaSp"><img src="@Url.Content("../img/product/"+@item.sanPham.AnhSp)" alt="Product"></a>
+                                    <div class="product-info">
+                                        <h4 class="product-title"><a asp-action="Details" asp-route-id="@item.sanPham.MaSp">@item.sanPham.TenSp</a></h4><span><em>Size:</em> 108ml</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="count-input">
+                                    <label for="txtsoLuong">Số Lượng:</label>
+                                    @{ var sanPham = lstSanPham.Where(x => x.MaSp.Equals(item.sanPham.MaSp)).SingleOrDefault(); }
+                                    <input onclick="UpdateCart(@item.sanPham.MaSp)" id="txtsoLuong-@item.sanPham.MaSp" 
+                                           name="txtsoLuong" min="1" max="@sanPham.SoLuong" step="1" value="@item.soLuong" type="number"
+                                           style="width:80px; text-align:center; margin-left:8px;" />
+                                    
+                                </div>
+                            </td>
+                            <td class="text-center text-lg text-medium">@item.TongTien.ToString("#,##0") VNĐ</td>
+                            <td class="text-center text-lg text-medium">0</td>
+                            <td class="text-center">
+                                <a href="" class="remove-from-cart" data-toggle="tooltip" title="" data-original-title="Remove item" onclick="RemoveCart(@item.sanPham.MaSp)">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="shopping-cart-footer">
+            @*<div class="column">
+                <form id="discount-form" class="coupon-form" onsubmit="Sales(discountInput.value)" method="post">
+                    <input id="discount-input" name="magiamgia" class="form-control form-control-sm" type="text" placeholder="mã giảm giá" required="">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">áp dụng</button>
+                </form>
+                
+                
+            </div>          
+            <div id="total-price" class="column text-lg">
+                <span class="text-medium">
+                    <script>
+                        var model = @Html.Raw(Json.Serialize(Model)); // Serialize the model as a JSON string
+                        var data = JSON.parse(model); // Parse the JSON string into a JavaScript object
+                        var totalPrice = data.reduce(function (acc, item) { return acc + item.TongTien; }, 0) - data.reduce(function (acc, item) { return acc + item.GiamGiaLoai1; }, 0) - data.reduce(function (acc, item) { return acc + item.GiamGiaLoai2; }, 0); // Calculate the discounted total price
+                        document.write(totalPrice.toString("#,##0") + " VNĐ"); // Display the formatted total price
+                    </script>
+                </span>
+            </div>
+            <script type="text/javascript">
+                    var discountForm = document.getElementById('discount-form');
+                    var discountInput = document.getElementById('discount-input');
+                    var totalPrice = document.getElementById('total-price');
+            </script>*@
+            <div class="column">
+                <form id="discount-form" class="coupon-form" onsubmit="return false" method="post">
+                    <input id="discount-input" name="magiamgia" class="form-control form-control-sm" type="text" placeholder="mã giảm giá" required="">
+                    <button class="btn btn-outline-primary btn-sm" type="submit" onclick="applyDiscount()">áp dụng</button>
+                </form>
+            </div>
+                <div id="total-price" class="column text-lg">
+                <span class="text-medium">@Model.Sum(x=> x.TongTien).ToString("#,##0") VNĐ</span>
+            </div>
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript">
+                var discountForm = document.getElementById('discount-form');
+                var discountInput = document.getElementById('discount-input');
+                var totalPrice = document.getElementById('total-price');
+
+                if (!totalPrice) {
+                    console.error("total-price element not found");
+                } else {
+                    var cartItems = @Html.Raw(Json.Serialize(Model)); // Serialize the model as a JSON string and parse it into a JavaScript object
+                    var totalTongTien = 0;
+                    var totalGiamGiaLoai1 = 0;
+                    var totalGiamGiaLoai2 = 0;
+
+                    for (var i = 0; i < cartItems.length; i++) {
+                        console.log("cartItem[" + i + "].TongTien: " + cartItems[i].tongTien);
+                        //console.log("cartItem[" + i + "].GiamGialoai1: " + cartItems[i].giamGialoai1);
+                        totalTongTien += Number(cartItems[i].tongTien);
+                        //totalGiamGiaLoai1 += Number(cartItems[i].giamGiaLoai1);
+                        //totalGiamGiaLoai2 += Number(cartItems[i].giamGiaLoai2);
+                    }
+
+                    function applyDiscount() {
+                        var tenKM = discountInput.value;
+                        $.ajax({
+                            url: '/giohang/sales',
+                            type: 'POST',
+                            data: { tenKM: tenKM },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log(data);
+                                console.log(typeof data.giamGialoai2);
+                                console.log(totalTongTien);
+                                console.log(data.giamGialoai1);
+                                console.log(Number(data.giamGialoai2 || 0));
+                                var totalPriceValue = totalTongTien - Number(data.giamGialoai1 || 0) - Number(data.giamGialoai2 || 0); // Calculate the discounted total price
+                                console.log(totalPriceValue);
+                                totalPrice.innerHTML = isNaN(totalPriceValue) ? "Invalid" : totalPriceValue.toLocaleString("vi-VN") + " VNĐ"; // Display the formatted total price
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                }
+            </script>
+            
+
+            @*<div id="total-price" class="column text-lg"><span class="text-medium">@Model.Sum(x=> x.TongTien).ToString("#,##0") - @Model.Sum(x => x.GiamGialoai2).ToString("#,##0") VNĐ</span></div>*@
+
+          
+        </div>
+    }
+    else
+    {
+        <h3 style="margin-top:100px !important;">Giỏ Hàng Của Bạn Đang Trống</h3>
+    }
+
+    <div class="shopping-cart-footer">
+        <div class="column"><a class="btn btn-outline-secondary" asp-action="Index" asp-controller="SanPham"><i class="icon-arrow-left"></i>&nbsp;Quay Lại Mua Thêm</a></div>
+
+        @if (Model != null && Model.Count() > 0)
+        {
+            <div class="column"><a class="btn btn-success" asp-action="Index" asp-controller="Checkout">Mua Hàng</a></div>
+        }
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+function RemoveCart(Id) {
+        $.ajax({
+            url: '/giohang/remove',
+            type: 'POST',
+            data: { maSP: Id },
+            success: function (data) {
+                console.log(data);
+                $('#total-price').html(data.totalPrice);
+                location.reload();
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Thất bại',
+                    text: 'Đã có lỗi xảy ra',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+
+    function UpdateCart(Id) {
+        var inputFieldId = '#txtsoLuong-' + Id;
+        var inputFieldValue = $(inputFieldId).val();
+        $.ajax({
+            url: '/giohang/update-cart',
+            type: 'POST',
+            data: { maSP: Id, soLuong: inputFieldValue },
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Thất bại',
+                    text: 'Đã có lỗi xảy ra',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+
+    //function Sales(Id) {
+    //    $.ajax({
+    //        url: '/giohang/sales',
+    //        type: 'POST',
+    //        data: { tenKM: Id },
+    //        success: function (data) {
+    //            console.log(data);
+    //            $('#total-price').html(data.GiamGiaLoai2);
+    //            location.reload();
+    //        },
+    //        error: function () {
+    //            swal.fire({
+    //                icon: 'error',
+    //                title: 'thất bại',
+    //                text: 'đã có lỗi xảy ra',
+    //                showconfirmbutton: false,
+    //                timer: 1500
+    //            });
+    //        }
+    //    });
+    //}
+</script>

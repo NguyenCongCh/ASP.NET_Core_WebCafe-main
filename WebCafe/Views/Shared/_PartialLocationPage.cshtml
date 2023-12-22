@@ -1,0 +1,13 @@
+﻿
+@{
+    var text = @ViewBag.tenDanhMuc;
+}
+
+<div id="header" class="location-page" style="margin-bottom:10px;">
+    <section class="c-breadcrumbs">
+        <div class="container" style=" text-align:center;">
+            <span class="item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></span>
+            <span class="item"> > @ViewBag.tenDanhMuc </span>
+        </div>
+    </section>
+</div>

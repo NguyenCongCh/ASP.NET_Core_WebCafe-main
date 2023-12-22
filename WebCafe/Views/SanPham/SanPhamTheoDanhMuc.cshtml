@@ -1,0 +1,109 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<SanPham>
+@{
+    ViewData["Title"] = "SanPhamTheoDanhMuc";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+
+    // Sản phẩm nổi bật
+    CuaHangBanCafeContext db = new CuaHangBanCafeContext();
+    var spBest = db.SanPhams.Where(p => p.BestSeller == true).ToList();
+}
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/page-list.css" rel="stylesheet">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    @* Vị trí trang *@
+    @await Html.PartialAsync("_PartialLocationPage")
+
+    <div class="container bootdey" style="margin-top:20px;">
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body">
+                    <input type="text" placeholder="Tìm Sản Phẩm" class="form-control" />
+                </div>
+            </section>
+            <section class="panel">
+                <header class="panel-heading">
+                    Danh Mục Sản Phẩm
+                </header>
+                @* Menu danh mục sản phẩm *@
+                @await Component.InvokeAsync("DanhMucSpMenu")
+            </section>
+
+            @* Best Seller *@
+            @await Html.PartialAsync("_Partial_BestSeller_SanPham", spBest)
+
+        </div>
+        <div class="col-md-9">
+
+            @* Hiển thị sản phẩm *@
+            <div class="row product-list">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4" style="margin-top:30px;">
+                        <div class="card">
+                            <div class="card-img-product">
+                                <img  style="width:250px; height:170px;  object-fit:cover;" src="@Url.Content("../img/product/"+@item.AnhSp)" alt="">
+                            </div>
+                            <div class="card-title">
+                                @item.TenSp
+                            </div>
+                            <div class="card-price">
+                                @item.GiaSp.ToString("#,##0") VNĐ
+                            </div>
+                            <div class="card-diseption">
+                                <div class="card-size">
+                                    <h3>Size:</h3>
+                                    <span>250ml</span>
+                                    <span>350ml</span>
+                                    <span>500ml</span>
+                                </div>
+                                <div class="card-action">
+
+                                    @* Kiểm tra đăng nhập *@
+
+                                    @if (Context.Session.GetString("MaKh") != null)
+                                    {
+                                        <button> <a asp-action="Details" asp-route-id="@item.MaSp" style="text-decoration:none; color:white">Mua Ngay</a></button>
+                                        <button onclick="AddToCartList(@item.MaSp)">Thêm<i class='bx bxs-cart-add'></i></button>
+                                    }
+                                    else
+                                    {
+                                        <button> <a asp-action="Login" asp-controller="Home" style="text-decoration:none; color:white">Mua Ngay</a></button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            @*Phân trang*@
+            <section style="background-color:transparent;" class="panel">
+                <div class="panel-body">
+                    <div class="pull-right">
+                        <ul class="pagination pagination-sm pro-page-list">
+                            <li>@Html.PagedListPager(Model,page=>Url.Action("SanPhamTheoDanhMuc",new{page=page,maDM = ViewBag.maDM}))</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+
+

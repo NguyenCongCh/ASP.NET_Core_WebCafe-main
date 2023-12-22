@@ -1,0 +1,320 @@
+@using Microsoft.EntityFrameworkCore;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    WebCafe.Models.CuaHangBanCafeContext db = new WebCafe.Models.CuaHangBanCafeContext();
+    var lstSanPham = db.SanPhams.ToList();
+    var danhMuc = db.DanhMucSps;
+
+    var khachHang = db.KhachHangs.Where(x => x.CreateDate >= DateTime.Now.AddDays(-7)).ToList();
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Doanh Thu Hôm Nay</p>
+                                <h5 class="font-weight-bolder">
+                                    2.582.030 vnđ
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+55%</span>
+                                    kể từ hôm qua
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Lượt Truy Cập Hôm Nay</p>
+                                <h5 class="font-weight-bolder">
+                                    2,300
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+3%</span>
+                                    kể từ tuần trước
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                                <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Khách Hàng Mới</p>
+                                <h5 class="font-weight-bolder">
+                                    +3,462
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-danger text-sm font-weight-bolder">-2%</span>
+                                    kể từ quý trước
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Bán Hàng</p>
+                                <h5 class="font-weight-bolder">
+                                    10.593.000 vnđ
+                                </h5>
+                                <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+5%</span> so với tháng trước
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                                <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <!-- Biểu đồ -->
+        <div class="col-lg-7 mb-lg-0 mb-4">
+            <div class="card z-index-2 h-100">
+                <div class="card-header pb-0 pt-3 bg-transparent">
+                    <h6 class="text-capitalize">Tổng Quan Về Bán Hàng</h6>
+                    <p class="text-sm mb-0">
+                        <i class="fa fa-arrow-up text-success"></i>
+                        <span class="font-weight-bold">4% </span> so với 2021
+                    </p>
+                </div>
+                <div class="card-body p-3">
+                    <div class="chart">
+                        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- List danh mục -->
+        <div class="col-lg-5">
+            <div class="card card-carousel overflow-hidden h-100 p-0">
+                <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                    <div class="card">
+                        <div class="card-header pb-0 p-3">
+                            <h6 class="mb-0">Danh Mục</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-group">
+                                @foreach (var item in danhMuc)
+                                {
+                                    <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                        <div class="d-flex align-items-center">
+                                            <img class="text-white opacity-10" src="@Url.Content("~/img/category/"+@item.AnhDm)" style="width:40px;" />
+                                            <div class="d-flex flex-column">
+                                                <h6 class="mb-1 text-dark text-sm">@item.TenDm</h6>
+                                                @{
+                                                    // Danh sách sản phẩm theo mã danh mục
+                                                    var lstSanPham1 = lstSanPham.Where(sp => sp.MaDm == item.MaDm).ToList();
+                                                    // Tổng số sản phẩm
+                                                    var tongSL = lstSanPham1.Count();
+                                                    // Số lượng hết hàng
+                                                    var hetHang = lstSanPham1.Where(sp => sp.SoLuong == 0).Count();
+                                                }
+                                                <span class="text-xs">Có @tongSL sản phẩm, <span class="font-weight-bold"> @hetHang hết hàng</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
+                                                <a class="ni ni-bold-right" aria-hidden="true" asp-controller="SanPham" asp-action="Index"></a>
+                                            </button>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Khách hàng -->
+    <div class="row mt-4">
+        <div class="col-lg-13 mb-lg-0 mb-4">
+            <div class="card ">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-2">Khách Hàng Mới Trong 7 Ngày Gần Đây</h6>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center ">
+                        <tbody>
+                            @foreach (var item in khachHang)
+                            {
+                                <tr>
+                                    <td class="w-30">
+                                        <div class="d-flex px-2 py-1 align-items-center">
+                                            <div>
+                                                <img src="@Url.Content("~/img/avatarKH/" + @item.AvatarKh)" alt="" class="avatar avatar-sm me-2">
+                                            </div>
+                                            <div class="ms-4">
+                                                <p class="text-xs font-weight-bold mb-0"></p>
+                                                <h6 class="text-sm mb-0">@item.TenKh</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">Giới Tính:</p>
+                                            <h6 class="text-sm mb-0">@item.GioiTinh</h6>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">Email</p>
+                                            <h6 class="text-sm mb-0">@item.Email</h6>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-sm">
+                                        <div class="col text-center">
+                                            <p class="text-xs font-weight-bold mb-0">Điện Thoại</p>
+                                            <h6 class="text-sm mb-0">@item.Phone</h6>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Vẽ đồ thị -->
+<script src="~/assets/js/plugins/chartjs.min.js"></script>
+<script>
+    // Lấy đối tượng canvas bằng ID và lấy đối tượng vẽ 2D (context) của canvas
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    // Tạo đối tượng gradient để tạo hiệu ứng gradient trên đường thẳng từ điểm (0,230) đến (0,50)
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    // Tạo các điểm dừng màu cho dải màu từ 1->0
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 10)');
+    gradientStroke1.addColorStop(0.8, 'rgba(94, 114, 228, 5)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+        type: "line", // Dạng biểu đồ
+        data: {
+            // Các giá trị cho trục Ox
+            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Đơn hàng",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#5e72e4",
+                backgroundColor: gradientStroke1,
+                borderWidth: 3,
+                fill: true,
+                // Giá trị của trục Oy tương ứng
+                data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+                maxBarThickness: 6
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#fbfbfb',
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        color: '#ccc',
+                        padding: 20,
+                        font: {
+                            size: 11,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+            },
+        },
+    });
+</script>

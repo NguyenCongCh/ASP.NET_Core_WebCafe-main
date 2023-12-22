@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model List<SanPham>
+
+<section class="panel">
+    <header class="panel-heading">
+        Best Seller
+    </header>
+    <div class="panel-body">
+        <div class="best-seller">
+            @foreach (var item in Model)
+            {
+                <article class="media">
+                    <a class="pull-left thumb p-thumb">
+                        <img src="@Url.Content("../img/product/"+@item.AnhSp)" style="width:100px;" />
+                    </a>
+                    <div class="media-body">
+                        @if (Context.Session.GetString("MaKh") != null)
+                        {
+                            <a asp-action="Details" asp-route-id="@item.MaSp" class="p-head" style="text-decoration:none;">@item.TenSp</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="Home" class="p-head" style="text-decoration:none;">@item.TenSp</a>
+                        }
+                        <p>@item.GiaSp.ToString("#,##0") VNĐ</p>
+                    </div>
+                </article>
+            }
+
+        </div>
+    </div>
+</section>

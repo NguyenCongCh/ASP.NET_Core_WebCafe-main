@@ -1,0 +1,57 @@
+﻿@model WebCafe.Models.KhuyenMai
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-body" style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+                   <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+              <h5 class="text-uppercase">Thêm Khuyến Mãi Mới</h5>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaKm" class="control-label">Mã khuyến kãi</label>
+                    <input asp-for="MaKm" class="form-control" />
+                <span asp-validation-for="MaKm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenKm" class="control-label">Tên khuyến mãi</label>
+                <input asp-for="TenKm" class="form-control" />
+                <span asp-validation-for="TenKm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiKm" class="control-label">Loại khuyến mãi</label>
+                <input asp-for="LoaiKm" class="form-control" />
+                <span asp-validation-for="LoaiKm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayBd" class="control-label">Ngày bắt đầu</label>
+                <input asp-for="NgayBd" class="form-control" />
+                <span asp-validation-for="NgayBd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayKt" class="control-label">Ngày kết thúc</label>
+                <input asp-for="NgayKt" class="form-control" />
+                <span asp-validation-for="NgayKt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaTri" class="control-label">Giá trị</label>
+                <input asp-for="GiaTri" class="form-control" />
+                <span asp-validation-for="GiaTri" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChiTiet" class="control-label">Chi tiết</label>
+                <input asp-for="ChiTiet" class="form-control" />
+                <span asp-validation-for="ChiTiet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+

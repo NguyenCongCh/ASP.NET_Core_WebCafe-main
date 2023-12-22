@@ -1,0 +1,43 @@
+﻿@using static WebCafe.Models.DanhMucSp
+@model WebCafe.Models.DanhMucSp
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-body" style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+    <h5 class="text-uppercase">Thêm Tin Mới</h5>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TenDm" class="control-label">Tên Danh Mục</label>
+                    <input asp-for="TenDm" class="form-control" />
+                    <span asp-validation-for="TenDm" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AnhDm" class="control-label">Ảnh Danh Mục</label>
+                    <input asp-for="AnhDm" class="form-control" />
+                    <span asp-validation-for="AnhDm" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MoTaDm" class="control-label">Mô Tả Danh Mục</label>
+                    <input asp-for="MoTaDm" class="form-control" />
+                    <span asp-validation-for="MoTaDm" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TrangThai" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.TrangThai,
+                    new SelectList(Enum.GetValues(typeof(Category))),"")
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

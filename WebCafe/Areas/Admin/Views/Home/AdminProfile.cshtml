@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Http
+@using static WebCafe.Models.KhachHang
+@model WebCafe.Models.KhachHang
+
+@{
+    ViewData["Title"] = "AdminProfile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    #GioiTinh {
+        border: 1px solid #d2d6da;
+        border-radius: 14px;
+        margin-top: 30px;
+        background-color: #fff;
+        padding: 6px;
+    }
+</style>
+<form asp-action="AdminProfile">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="MaKh" />
+    <input type="hidden" asp-for="Password" />
+
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+        <div class="card-body p-3">
+            <div class="row gx-4">
+                <div class="col-auto">
+                    <div class="avatar avatar-xl position-relative">
+                        <img src="@Url.Content("~/img/avatarKH/"+Model.AvatarKh)" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    </div>
+                </div>
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h5 class="mb-1">
+                            @Context.Session.GetString("TenKh").ToString()
+                        </h5>
+                        <p class="mb-0 font-weight-bold text-sm">
+                            @Context.Session.GetString("Email").ToString()
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0">Sửa Thông Tin</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-uppercase text-sm">Thông Tin</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TenKh" class="form-control-label">Tên Người Dùng</label>
+                                    <input asp-for="TenKh" class="form-control" type="text">
+                                    <span asp-validation-for="TenKh" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Email" class="form-control-label">Email</label>
+                                    <input asp-for="Email" class="form-control" type="email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Phone" class="form-control-label">Điện Thoại</label>
+                                    <input asp-for="Phone" class="form-control" type="text">
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Ngaysinh" class="form-control-label">Ngày Sinh</label>
+                                    <input asp-for="Ngaysinh" class="form-control" type="date">
+                                    <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Chọn Giới Tính</label>
+                                    @Html.DropDownListFor(m => m.GioiTinh, new SelectList(Enum.GetValues(typeof(Gender))), "")
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label asp-for="Diachi" class="form-control-label">Địa Chỉ</label>
+                                    <input asp-for="Diachi" class="form-control" type="text">
+                                    <span asp-validation-for="Diachi" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <button type="submit" value="Save" class="btn btn-primary">Lưu Thay Đổi</button>
+                        </div>
+                        <hr class="horizontal dark">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

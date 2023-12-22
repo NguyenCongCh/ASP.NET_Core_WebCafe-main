@@ -1,0 +1,115 @@
+﻿@using static WebCafe.Models.KhachHang
+@model WebCafe.Models.KhachHang
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/register.css">
+    <link rel="stylesheet" href="~/lib/bootstrap-5.1.3-dist/css/bootstrap.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        #GioiTinh {
+            border: 1px solid #d2d6da;
+            border-radius: 14px;
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 6px;
+        }
+    </style>
+</head>
+<body>
+    <form asp-action="Register">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="container-register">
+            <div class="register">
+                <h1 class="register-heading">REGISTER</h1>
+                <div class="container-btn-social">
+                    <button class="register-social">
+                        <i class='bx bxl-google register-social-ic'></i>
+                        <span class="register-social-text">Đăng ký với Google</span>
+                    </button>
+                </div>
+                <div class="register-or"><span>Or</span></div>
+
+                <div class="container">
+                    <div class="row register-container col-md-12">
+                        <label asp-for="TenKh" class="register-labelname">Tên</label>
+                        <input asp-for="TenKh" type="text" class="register-ipname" placeholder="Full name">
+                        <span asp-validation-for="TenKh" class="text-danger"></span>
+                    </div>
+
+                    <div class="row register-container">
+                        <div class="col-md-6">
+                            <label asp-for="Ngaysinh" class="register-label">Ngày Sinh</label>
+                            <input asp-for="Ngaysinh" type="date" class="register-input" placeholder="dd/mm/yyyy" />
+                            <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="GioiTinh" class="register-label">Giới Tính</label>
+                            @Html.DropDownListFor(m => m.GioiTinh, new SelectList(Enum.GetValues(typeof(Gender))) )
+                        </div>
+                    </div>
+
+                    <div class="row register-container">
+                        <div class="col-md-3">
+                            <label asp-for="Phone" class="register-label">Điện thoại</label>
+                            @Html.TextBoxFor(row=>row.Phone, new {@class="form-control",placeholder="Số Điện Thoại"})
+                            @Html.ValidationMessageFor(row=>row.Phone)
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Diachi" class="register-label">Địa chỉ</label>
+                            @Html.TextBoxFor(row=>row.Diachi, new {@class="form-control",placeholder="Địa chỉ"})
+                            @Html.ValidationMessageFor(row=>row.Diachi)
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Email" class="register-label">Email</label>
+                            @Html.TextBoxFor(row=>row.Email, new {@class="form-control",placeholder="Email"})
+                            @Html.ValidationMessageFor(row=>row.Email)
+                        </div>
+                    </div>
+
+                    <div class="row register-container">
+                        <div class="col-md-6">
+                            <label asp-for="Password" class="register-label">Mật khẩu</label>
+                            <input asp-for="Password" type="password" id="password" class="register-input" placeholder="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password" class="register-label">Nhập lại mật khẩu</label>
+                            <input type="password" id="confirm_password" class="register-input" placeholder="Nhập lại mật khẩu">
+                        </div>
+                    </div>
+                    <button type="submit" value="Register" class="register-btn btn btn-primary">Đăng ký</button>
+                    <p class="login-question">
+                        <a asp-action="Login" asp-controller="Home" class="login-text">Quay lại đăng nhập</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <script language="javascript">
+            var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+            function validatePassword() {
+                if (password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Mật khẩu không trùng khớp !");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@model WebCafe.Models.KhachHang
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<head>
+
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="~/css/css_login.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <form asp-action="Login" class="container-login">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="login">
+            <h1 class="login-heading">LOGIN</h1>
+            <button class="login-social">
+                <i class='bx bxl-google login-social-ic'></i>
+                <span class="login-social-text">Đăng nhập với Google</span>
+            </button>
+            <div class="login-or"><span>Or</span></div>
+            <label asp-for="Email" class="control-label login-label"></label>
+            <input asp-for="Email" class="form-control login-input" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+            <label asp-for="Password" class="control-label login-label"></label>
+            <input asp-for="Password" type="password" class="form-control login-input" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <button type="submit" class="login-btn btn btn-primary">Login</button>
+            <p class="register-question">
+                <span>Bạn chưa có tài khoản ?</span>
+                <a asp-action="Register" asp-controller="Home" class="register-text">Đăng ký</a>
+            </p>
+        </div>
+    </form>
+</body>

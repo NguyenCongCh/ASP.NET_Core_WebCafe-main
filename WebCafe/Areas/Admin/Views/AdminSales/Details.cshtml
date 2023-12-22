@@ -1,0 +1,80 @@
+﻿@model WebCafe.Models.KhuyenMai
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .col-sm-10,
+    .col-sm-2{
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    .col-sm-2{
+        color: #000;
+    }
+</style>
+
+<div style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+<h1>Chi Tiết Khuyến Mãi</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           Mã khuyến mãi:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaKm)
+        </dd>
+        <dt class = "col-sm-2">
+           Tên khuyến mãi:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenKm)
+        </dd>
+        <dt class = "col-sm-2">
+           Loại khuyến mãi:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoaiKm)
+        </dd>
+        <dt class = "col-sm-2">
+          Ngày bắt đầu:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NgayBd)
+        </dd>
+        <dt class = "col-sm-2">
+           Ngày kết thúc:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NgayKt)
+        </dd>
+        <dt class = "col-sm-2">
+           Giá trị:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GiaTri)
+        </dd>
+        <dt class = "col-sm-2">
+           Chi tiết:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ChiTiet)
+        </dd>
+        <dt class = "col-sm-2">
+           Tình trạng:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TinhTrang)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MaKm" class="btn btn-primary" style="font-size:12px;">Sửa</a>
+    <a asp-action="Delete" asp-route-id="@Model.MaKm" class="btn btn-danger" style="font-size:12px;">Xóa</a>
+</div>
+</div>

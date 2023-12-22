@@ -1,0 +1,64 @@
+﻿@model WebCafe.Models.DanhMucSp
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .col-sm-10,
+    .col-sm-2 {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .col-sm-2 {
+        color: #000;
+    }
+</style>
+
+<div style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+    <h3>Xóa Danh Mục</h3>
+
+    <h5>Bạn có chắn muốn xóa danh mục?</h5>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Mã Danh Mục:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.MaDm
+            </dd>
+            <dt class="col-sm-2 anh-sp">
+                Ảnh Danh Mục:
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@Url.Content("~/img/category/" + @Model.AnhDm)" style="width:200px; height:auto; object-fit:cover;">
+            </dd>
+            <dt class="col-sm-2">
+                Tên Danh Mục:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.TenDm
+            </dd>
+            <dt class="col-sm-2">
+                Trạng Thái:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TrangThai)
+            </dd>
+            <dt class="col-sm-2">
+                Mô Tả Danh Mục:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.MoTaDm
+            </dd>
+        </dl>
+    </div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaDm" />
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+    </form>
+</div>

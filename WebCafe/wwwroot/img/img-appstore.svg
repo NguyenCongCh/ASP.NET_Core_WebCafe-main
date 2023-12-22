@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="27px" viewBox="0 0 80 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="#-FOOTER-3" transform="translate(-1020.000000, -144.000000)">
+            <g id="Group-7">
+                <g id="Group-6" transform="translate(245.000000, 105.000000)">
+                    <g id="Group-5" transform="translate(776.000000, 1.000000)">
+                        <g id="Group-4" transform="translate(0.000000, 39.000000)">
+                            <g id="Group">
+                                <rect id="container" stroke="#858585" x="-0.5" y="-0.5" width="79" height="26" rx="2"></rect>
+                                <text id="Available-on-the" font-family="MyriadPro-Regular, Myriad Pro" font-size="7" font-weight="normal" letter-spacing="0.0599999987" fill="#858585">
+                                    <tspan x="19" y="9">Available on the</tspan>
+                                </text>
+                                <text id="App-Store" font-family="MyriadPro-Regular, Myriad Pro" font-size="12.8000002" font-weight="normal" letter-spacing="-0.450000018" fill="#858585">
+                                    <tspan x="19" y="20">App Store</tspan>
+                                </text>
+                                <path d="M7.28948057,4 C6.57732011,4 6,4.65126352 6,5.45776843 L6,20.5422316 C6,21.3473348 6.57668151,22 7.28948057,22 L13.7105194,22 C14.4226799,22 15,21.3487365 15,20.5422316 L15,5.45776843 C15,4.65266516 14.4233185,4 13.7105194,4 L7.28948057,4 L7.28948057,4 Z M6.84375,6.36065574 L6.84375,19.6393443 L14.15625,19.6393443 L14.15625,6.36065574 L6.84375,6.36065574 L6.84375,6.36065574 Z M10.5,21.4098361 C10.8106602,21.4098361 11.0625,21.1456107 11.0625,20.8196721 C11.0625,20.4937336 10.8106602,20.2295082 10.5,20.2295082 C10.1893398,20.2295082 9.9375,20.4937336 9.9375,20.8196721 C9.9375,21.1456107 10.1893398,21.4098361 10.5,21.4098361 L10.5,21.4098361 Z M9.375,5.18032787 C9.375,5.34329714 9.47167969,5.47540984 9.59896445,5.47540984 L11.4010355,5.47540984 C11.5247277,5.47540984 11.625,5.33853099 11.625,5.18032787 C11.625,5.0173586 11.5283203,4.8852459 11.4010355,4.8852459 L9.59896445,4.8852459 C9.4752723,4.8852459 9.375,5.02212474 9.375,5.18032787 Z" id="iPhone" fill="#858585"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

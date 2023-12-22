@@ -1,0 +1,76 @@
+@model WebCafe.Models.TinTuc
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .col-sm-10,
+    .col-sm-2 {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .col-sm-2 {
+        color: #000;
+    }
+</style>
+
+<div style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+    <h1>Chi Tiết Tin Tức</h1>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 anh-sp">
+                Ảnh Sản Phẩm:
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@Url.Content("~/img/tintuc/"+ Model.AnhTt)" style="width:200px; object-fit:cover;">
+            </dd>
+            <dt class="col-sm-2">
+                Tiêu Đề:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.TenTt
+            </dd>
+            <dt class="col-sm-2">
+                Tên Tác Giả:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Tacgia
+            </dd>
+            <dt class="col-sm-2">
+                Ngày Đăng:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CreateDate.ToString("dd/MM/yyyy")
+            </dd>
+            <dt class="col-sm-2">
+                Đây là tin Video:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.LoaiTin
+                @*@Html.DisplayFor(model => model.LoaiTin)*@
+            </dd>
+            <dt class="col-sm-2">
+                Mô Tả Ngắn:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Motangan
+            </dd>
+            <dt class="col-sm-2">
+                Mô Tả Chi Tiết:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Motadai
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-area="Admin" asp-controller="AdminNews" asp-action="Edit" asp-route-id="@Model.MaTt" class="btn btn-primary" style="font-size:12px;">Sửa</a>
+        <a asp-action="Delete" asp-route-id="@Model.MaTt" class="btn btn-danger" style="font-size:12px;">Xóa</a>
+    </div>
+</div>

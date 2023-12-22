@@ -1,0 +1,189 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+@model WebCafe.Models.DonHang
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <div class="container">
+            <!-- Title -->
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Mã Đơn #@Model.MaDh</h2>
+            </div>
+
+            <!-- Main content -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Details -->
+                    <div class="card_details mb-4">
+                        <div class="card-body">
+                            <div class="mb-3 d-flex justify-content-between">
+                                <div>
+                                    <span class="me-3">@Model.NgayTao.ToString("dd/MM/yyyy")</span>
+                                    <span class="me-3">#@Model.MaKh</span>
+                                    <span class="me-3">COD</span>
+                                    <span class="badge rounded-pill bg-info">SHIP COD</span>
+                                </div>
+                            </div>
+                            <table class="table table-borderless">
+                                <tbody>
+                                    @{
+                                        WebCafe.Models.CuaHangBanCafeContext _context = new WebCafe.Models.CuaHangBanCafeContext();
+                                        WebCafe.Models.SanPham sanPham = new WebCafe.Models.SanPham();
+                                        var maKH = Context.Session.GetString("MaKh");
+                                        var chiTietDonHang = _context.ChiTietDonHangs
+                                        .Include(c => c.MaDhNavigation)
+                                        .Include(c => c.MaSpNavigation)
+                                        .Where(m => m.MaDh == Model.MaDh);
+
+                                    }
+                                    @foreach (var item in chiTietDonHang)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex mb-2">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="@item.MaSpNavigation.AnhSp" alt="" width="35" class="img-fluid">
+                                                    </div>
+                                                    <div class="flex-lg-grow-1 ms-3">
+                                                        <h6 class="small mb-0"><a href="#" class="text-reset">@item.MaSpNavigation.TenSp</a></h6>
+                                                        <span class="small">Size: 180ml</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>@item.SoLuong</td>
+                                            <td class="text-end">@item.TongTien.ToString("#,##0") VNĐ</td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                                <tfoot>
+                                    @{
+                                        WebCafe.Models.KhuyenMai khuyenMai = _context.KhuyenMais.SingleOrDefault(k => k.MaKm == Model.MaKm);
+                                        int discount = khuyenMai?.GiaTri.GetValueOrDefault() ?? 0;
+                                        int total = Model.TongTien ?? 0;
+                                        if (discount <= 100 && discount > 0)
+                                        {
+                                            int x = 100 - discount;
+                                            total = (total * 100) / x; 
+                                        }
+                                        else
+                                        {
+                                            total += discount;
+                                        }
+                                    }
+                                    <tr>
+                                        <td colspan="2">Tổng Tiền</td>
+                                        <td class="text-end">@*@Model.TongTien.Value.ToString("#,##0") VNĐ*@@total.ToString("#,##0") VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Phí Vận Chuyển</td>
+                                        <td class="text-end">0</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2">Giảm Giá</td>                                    
+                                        @{
+                                            if (discount <= 100 && discount > 0){
+                                                <td class="text-danger text-end"> @discount.ToString()%</td>
+                                            } else
+                                            {
+                                                <td class="text-danger text-end"> @discount.ToString("#,##0") VNĐ</td>
+                                            }
+                                        }
+                                               
+                                    </tr>
+                                    <tr class="fw-bold">
+                                        <td colspan="2">Tổng Thanh Toán</td>
+                                        <td class="text-end">@Model.TongTien.Value.ToString("#,##0") VNĐ</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Payment -->
+                    <div class="card_details mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h3 class="h6">Phương Thức Thanh Toán</h3>
+                                    <p>
+                                        Thanh Toán Khi Nhận Hàng <br>
+                                        Tổng: @Model.TongTien.Value.ToString("#,##0") VNĐ <span class="badge bg-success rounded-pill">Chưa trả</span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h3 class="h6">Thông Tin Nhận</h3>
+                                    <address>
+                                        <strong>@Model.MaKhNavigation.TenKh</strong><br>
+                                        @Model.MaKhNavigation.Diachi<br>
+                                        Điện Thoại: +84 @Model.MaKhNavigation.Phone.ToString("###,###,####")<br>
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Customer Notes -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="h6">Ghi chú</h3>
+                            <p>Trống.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style type="text/css">
+        body {
+            background: #fff !important;
+        }
+
+        .card_details,
+        .card {
+            background: #fff !important;
+            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+        }
+
+        .card_details,
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: 1rem;
+        }
+
+        .text-reset {
+            --bs-text-opacity: 1;
+            color: inherit !important;
+        }
+
+        a {
+            color: #5465ff;
+            text-decoration: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+    </script>
+</body>

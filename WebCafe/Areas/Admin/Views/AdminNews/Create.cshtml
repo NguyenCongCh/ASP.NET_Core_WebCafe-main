@@ -1,0 +1,128 @@
+@model WebCafe.Models.TinTuc
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+<div class="card-body" style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+        <h5 class="text-uppercase">Thêm Tin Mới</h5>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TenTt" class="control-label">Tiêu đề tin tức</label>
+                    <input asp-for="TenTt" class="form-control" />
+                    <span asp-validation-for="TenTt" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Tacgia" class="control-label">Tên tác giả</label>
+                    <input asp-for="Tacgia" class="form-control" /> <br />
+                    <span asp-validation-for="Tacgia" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            @*<div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="AnhTt" class="control-label">Link Ảnh (Video) Tin Tức</label>
+                    <input asp-for="AnhTt" class="form-control" id="file-name" />
+                    <span asp-validation-for="AnhTt" class="text-danger"></span>
+
+                    <input type="button" id="choose-file" value="Choose File" class="form-control btn btn-primary col-md-6" style="margin-top:3px;" />
+                </div>
+            </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="AnhTt" class="control-label">Link Ảnh (Video) Tin Tức</label>
+                    <br />
+                    <input type="file" id="image-file" name="file" accept=".jpg,.png" onchange="updateFileName()" />
+                    <br /><br />
+                    <input asp-for="AnhTt" class="form-control" id="file-name" readonly="readonly" />
+                    <span asp-validation-for="AnhTt" class="text-danger"></span>
+                    <br /><br />
+                    <input type="button" id="choose-file" value="Choose File" class="btn btn-primary" style="margin-top:3px;" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Motangan" class="control-label">Mô Tả Ngắn</label>
+                    <textarea asp-for="Motangan" class="form-control"> </textarea>
+                    <span asp-validation-for="Motangan" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" asp-for="LoaiTin" /> Đây là loại tin có Video
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Motadai" class="control-label">Mô Tả Chi Tiết Tin Tức</label>
+                    <textarea id="nhap-tintuc" asp-for="Motadai" class="form-control"> </textarea>
+                    <span asp-validation-for="Motadai" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <div id="thongBao" data-tbao="@ViewBag.ThongBao"></div>
+                <script src="~/js/Alert_Them_Sua_Xoa_ThatBai.js"></script>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("nhap-tintuc") });
+</script>
+
+<script>
+    //var chooseFileButton = document.getElementById('choose-file');
+    //var fileNameTextbox = document.getElementById('file-name');
+
+    //chooseFileButton.addEventListener('click', function () {
+    //    var fileChooser = document.createElement('input');
+    //    fileChooser.setAttribute('type', 'file');
+    //    fileChooser.setAttribute('accept', '.jpg,.png');
+
+    //    fileChooser.addEventListener('change', function () {
+    //        fileNameTextbox.value = fileChooser.files[0].name;
+    //    });
+
+    //    fileChooser.click('OK');
+    //});
+
+    var chooseFileButton = document.getElementById('choose-file');
+
+    chooseFileButton.addEventListener('click', function () {
+        var fileChooser = document.querySelector('#image-file');
+        fileChooser.click();
+    });
+
+    function updateFileName() {
+        var fileNameTextbox = document.getElementById('file-name');
+        var fileChooser = document.querySelector('#image-file');
+
+        if (fileChooser.value.length > 0) {
+            fileNameTextbox.value = fileChooser.files[0].name;
+        }
+    }
+</script>

@@ -1,0 +1,137 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container-login {
+    margin-top: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    padding: 90px 75px;
+    background-color: #fff;
+    width: 600px;
+    border-radius: 20px;
+}
+
+.login-heading {
+    font-size: 30px;
+    font-weight: bold;
+    color: #373941;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-social {
+    padding: 10px;
+    border-radius: 20px;
+    display: block;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background-color: #4c6ffa;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 5px 20px 0 rgb(76, 111, 244,0.5);
+}
+
+.login-social-ic {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: #4c6ffa;
+    font-size: 30px;
+}
+
+.login-social-text {
+    display: block;
+    margin: 0 auto;
+}
+
+.login-or {
+    text-align: center;
+    font-size: 16px;
+    color: #ccc;
+    margin: 30px auto;
+    position: relative;
+}
+
+    .login-or span {
+        display: inline-block;
+        padding: 10px 30px;
+        background-color: #fff;
+        position: relative;
+        z-index: 2;
+    }
+
+    .login-or::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+
+.login-label {
+    font-size: 16px;
+    color: #373941;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-input {
+    display: block;
+    width: 100%;
+    padding: 25px;
+    border-radius: 20px;
+    background-color: #f2f3f5;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 25px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    outline: none;
+    display: inline-block;
+    border-radius: 20px;
+    background-color: rgb(130, 201, 30);
+    box-shadow: 0 5px 20px 0 rgb(130, 201, 30,0.5);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.register-question {
+    text-align: center;
+    color: #999;
+    font-size: 16px
+}
+
+.register-text {
+    text-decoration: none;
+    color: #4c6ffa;
+}

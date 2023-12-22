@@ -1,0 +1,104 @@
+﻿@model IEnumerable<WebCafe.Models.TinTuc>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+
+<head>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/css/style-news.css">
+    <link rel="stylesheet" href="~/css/page-list.css">
+</head>
+
+
+
+<body style="width: 100%;">
+
+    @* Vị trí trang *@
+    @await Html.PartialAsync("_PartialLocationPage")
+
+    <div class="world-latest-articles" style="width: 70%;  margin:auto;">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="title">
+                    <h5>Tin Mới Nhất</h5>
+                </div>
+                @{
+                    var news_image = @Model.Where(p => p.LoaiTin == false);
+                }
+                @foreach (var item in news_image)
+                {
+                    <!-- Single Blog Post -->
+                    <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Post Thumbnail -->
+                        <div class="post-thumbnail">
+                            <img src="@Url.Content("../img/tintuc/"+@item.AnhTt)" alt="">
+                        </div>
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <a asp-controller="TinTuc" asp-action="Details" asp-route-id="@item.MaTt" class="headline" style="text-decoration:none;">
+                                <h5>@item.TenTt</h5>
+                            </a>
+                            <p>@item.Motangan</p>
+                            <!-- Post Meta -->
+                            <div class="post-meta">
+                                <p>
+                                    <a asp-controller="TinTuc" asp-action="Details" asp-route-id="@item.MaTt" class="post-author" style="text-decoration:none;">@item.Tacgia</a>
+                                    Ngày đăng: <a style="text-decoration:none;" class="post-date">@item.CreateDate.ToString("dd/MM/yyyy")</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="title">
+                    <h5>Videos Quảng Bá</h5>
+                </div>
+                @{
+                    var news_video = Model.Where(p => p.LoaiTin == true);
+                }
+                @foreach (var item in news_video)
+                {
+                    <!-- Single Blog Post -->
+                    <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Post Thumbnail -->
+                        <div class="post-thumbnail">
+                            <video autoplay controls>
+                                <source src="@Html.DisplayFor(modelItem => item.AnhTt)">
+                            </video>
+                            <!-- Catagory -->
+                            <div class="post-cta"><a href="@Html.DisplayFor(modelItem => item.AnhTt)">Xem Ngay</a></div>
+                            <!-- Video Button -->
+                            <a href="@Html.DisplayFor(modelItem => item.AnhTt)" class="video-btn"><i class="fa fa-play"></i></a>
+                        </div>
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <a asp-action="Details" asp-route-id="@item.MaTt" class="headline" style="text-decoration:none;">
+                                <h5>@Html.DisplayFor(modelItem => item.TenTt)</h5>
+                            </a>
+                            <p>@Html.DisplayFor(modelItem => item.Motangan)</p>
+                            <!-- Post Meta -->
+                            <div class="post-meta">
+                                <p><a asp-action="Details" asp-route-id="@item.MaTt" class="post-author" style="text-decoration:none;">@Html.DisplayFor(modelItem => item.Tacgia)</a> Ngày đăng: <a href="#" class="post-date">@Html.DisplayFor(modelItem => item.CreateDate)</a></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+<!-- jQuery (Necessary for All JavaScript Plugins) -->
+<script src="~/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="~/js/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="~/js/bootstrap.min.js"></script>
+<!-- Plugins js -->
+<script src="~/js/plugins.js"></script>
+<!-- Active js -->
+<script src="~/js/active.js"></script>

@@ -1,0 +1,143 @@
+﻿body {
+}
+
+.content {
+    background: none;
+}
+
+.c-breadcrumbs {
+    margin-left: 200px;
+}
+
+.location-page a {
+    text-decoration: none;
+    color: #fff;
+}
+
+    .location-page a:hover {
+        color: rgb(198, 209, 37);
+    }
+
+.content-chi-tietsp {
+    margin-left: 10%;
+}
+
+.img-sp-chitiet {
+    margin-left: 18%;
+}
+
+.container-detail {
+    margin-top: 30px !important;
+}
+
+.title-tensp {
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(7, 44, 112);
+}
+
+.gia-chitiet {
+    margin-bottom: 0px;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(161, 161, 16);
+}
+
+.container-thongtin-sp {
+    width: 100%;
+    padding-top: 12px;
+}
+
+.title-chitiet {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(146, 133, 133);
+    margin-bottom: 16px;
+}
+
+.content-chitiet {
+    /* margin-bottom: 14px; */
+    font-weight: 600;
+    /* padding: 12px; */
+    font-size: 14px;
+}
+
+.btn-them-gio {
+    border-bottom: 1px solid #ccc;
+}
+
+    .btn-them-gio button {
+        background: rgb(7, 44, 112);
+        margin-bottom: 30px;
+        padding: 12px;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-weight: bold;
+    }
+
+        .btn-them-gio button:hover {
+            opacity: 0.5;
+        }
+
+.title-thanh-phan {
+    border-top: 1px solid #ccc;
+    font-weight: bold;
+    color: rgb(146, 133, 133);
+    margin: 25px 0 6px 0;
+}
+
+.container-chitiet-tp {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+    .container-chitiet-tp .row div {
+        margin: 4px 0;
+    }
+
+.title-chu-thich {
+    margin-top: 10px;
+}
+
+.sp-noi-bat {
+    width: 80%;
+    margin: 60px auto;
+    border-top: 1px solid #ccc;
+}
+
+
+
+
+.slide-detail-product {
+    width: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-top: 50px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.chuyen-slide-detail img {
+    width: 500px;
+    float: left;
+}
+
+.chuyen-slide-detail {
+    width: 9999px;
+    transition: all 0.5s;
+}
+
+.dieu-huong-detail {
+    position: absolute;
+    color: rgb(20, 23, 207);
+    font-size: 50px;
+    top: 48%;
+    padding-left: 20px;
+}
+
+    .dieu-huong-detail i:last-child {
+        position: relative;
+        left: 150px;
+    }

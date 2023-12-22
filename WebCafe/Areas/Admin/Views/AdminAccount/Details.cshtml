@@ -1,0 +1,51 @@
+﻿@model WebCafe.Models.Account
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .col-sm-10,
+    .col-sm-2 {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .col-sm-2 {
+        color: #000;
+    }
+</style>
+
+<div style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+    <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+    <h1>Chi Tiết Khách Hàng</h1>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Tài Khoản:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TaiKhoan)
+            </dd>
+            <dt class="col-sm-2">
+                Ngày Tạo:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+            <dt class="col-sm-2">
+                Quyền:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Role.Mota)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.AccountId" class="btn btn-primary" style="font-size:12px;">Sửa</a>
+        @* <a asp-action="Delete" asp-route-id="@Model.AccountId"class="btn btn-danger" style="font-size:12px;">Delete</a>*@
+    </div>
+</div>

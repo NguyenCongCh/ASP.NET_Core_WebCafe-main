@@ -1,0 +1,65 @@
+﻿@using static WebCafe.Models.KhuyenMai
+@model WebCafe.Models.KhuyenMai
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="card-body" style="margin-top:40px;background-color: var(--bs-body-bg); border-radius:12px; padding:20px;">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaKm" />
+             <a asp-action="Index" style="font-size:30px;"><i class='bx bx-arrow-back'></i></a>
+             <h4>Sửa Khuyến Mãi</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="TenKm" class="control-label"></label>
+                <input asp-for="TenKm" class="form-control"  />
+                <span asp-validation-for="TenKm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiKm" class="control-label"></label>
+                <input asp-for="LoaiKm" class="form-control"  />
+                <span asp-validation-for="LoaiKm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayBd" class="control-label"></label>
+                <input asp-for="NgayBd" class="form-control"  />
+                <span asp-validation-for="NgayBd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayKt" class="control-label"></label>
+                <input asp-for="NgayKt" class="form-control"  />
+                <span asp-validation-for="NgayKt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaTri" class="control-label"></label>
+                <input asp-for="GiaTri" class="form-control"  />
+                <span asp-validation-for="GiaTri" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChiTiet" class="control-label"></label>
+                <input asp-for="ChiTiet" class="form-control"  />
+                <span asp-validation-for="ChiTiet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TinhTrang" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.TinhTrang,
+                new SelectList(Enum.GetValues(typeof(Sales))),"")
+             </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Về trang danh sách</a>
+</div>
+</div>
+
+

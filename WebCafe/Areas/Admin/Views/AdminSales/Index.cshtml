@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebCafe.Models.KhuyenMai>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+    <head> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+</head>
+
+
+<div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h4>Danh Sách khuyến mãi</h4>
+                <p>
+                    <a asp-action="Create" class="btn btn-primary" style="margin-top:20px;">Thêm Khuyến Mãi</a>
+                </p>
+            </div>
+       
+            <div class="card-body px-0 pt-0 pb-2" >
+              <div class="table-responsive p-0">
+                <table id="example" class="table align-items-center justify-content-center mb-0 table-striped" style="font-size:20px;">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Mã khuyến mãi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Tên khuyến mãi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Loại khuyến mãi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Ngày bắt đầu</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Ngày kết thúc</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Giá trị</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Chi tiết</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">Tình trạng</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                      @foreach (var item in Model) {
+                       <tr>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.MaKm)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.TenKm)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.LoaiKm)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.NgayBd)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.NgayKt)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.GiaTri)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.ChiTiet)</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold" style="font-size:12px;">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
+                      </td>
+                      <td class="align-middle">
+                         <a asp-action="Details" asp-route-id="@item.MaKm" class="btn btn-primary" style="font-size:12px;">Xem</a>
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/datatables-bt5.js"></script>

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<DanhMucSp>
+
+<div class="content-category">
+
+    @foreach (var danhmuc in Model)
+    {
+        <a asp-controller="SanPham" asp-action="SanPhamTheoDanhMuc" asp-route-maDM="@danhmuc.MaDm" asp-route-page="1">
+            <img src="@Url.Content("../img/category/"+danhmuc.AnhDm)" alt="">
+            <article>@danhmuc.TenDm</article>
+        </a>
+    }
+
+</div>
